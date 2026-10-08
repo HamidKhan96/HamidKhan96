@@ -185,7 +185,11 @@ REPOS = [
 ]
 
 def commits_svg(p):
-    w, h = 1080, 250
+    # 272 tall, not 250. Five rows from top=58 at 38px pitch put the last bar's
+    # bottom edge at exactly 232, and the footnote baseline was at h-18 = 232:
+    # the two collided precisely, and only a render showed it. The footnote now
+    # sits at h-20 = 252, twenty clear of the last bar.
+    w, h = 1080, 272
     left, top, barh, gap = 190, 58, 22, 16
     maxv = max(v for _, v in REPOS)
     track = w - left - 150
@@ -208,7 +212,7 @@ def commits_svg(p):
             f'font-size="13.5" fill="{p["muted"]}">{v:,}</text>'
         )
     out.append(
-        f'<text x="28" y="{h - 18}" font-family="{SANS}" font-size="12" fill="{p["subtle"]}">'
+        f'<text x="28" y="{h - 20}" font-family="{SANS}" font-size="12" fill="{p["subtle"]}">'
         f'2,042 commits since April 2026. Counted in each repository, public and private.</text>'
     )
     out.append('</svg>')
