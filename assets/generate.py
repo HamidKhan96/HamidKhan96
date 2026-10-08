@@ -169,10 +169,56 @@ def diagram_svg(p):
     return '\n  '.join(out) + '\n'
 
 
+
+# ── where the commits are ───────────────────────────────────────────────────
+# Counted with `git rev-list --count HEAD` in each repository on 2026-10-08.
+# This replaced a github-readme-stats card that reported "Total Commits: 3",
+# because that card reads public repositories only and twelve of fourteen are
+# private. A graph that under-reports by three orders of magnitude is worse
+# than no graph, which is the same reason there is no top-languages card.
+REPOS = [
+    ('Applying',      1680),
+    ('Quill',          267),
+    ('Workspace',       65),
+    ('Exynex site',     28),
+    ('ICP pipelines',    2),
+]
+
+def commits_svg(p):
+    w, h = 1080, 250
+    left, top, barh, gap = 190, 58, 22, 16
+    maxv = max(v for _, v in REPOS)
+    track = w - left - 150
+    out = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="Commits by repository: Applying 1680, Quill 267, workspace 65, Exynex site 28, ICP pipelines 2">',
+        f'<rect width="{w}" height="{h}" rx="14" fill="{p["panel"]}" stroke="{p["line"]}"/>',
+        f'<text x="28" y="34" font-family="{SANS}" font-size="13" letter-spacing="0.09em" fill="{p["subtle"]}">WHERE THE COMMITS ARE</text>',
+    ]
+    for i, (name, v) in enumerate(REPOS):
+        y = top + i * (barh + gap)
+        bw = max(3, track * v / maxv)
+        out.append(
+            f'<text x="{left - 16}" y="{y + 16}" text-anchor="end" font-family="{SANS}" '
+            f'font-size="14" fill="{p["ink"]}">{name}</text>'
+        )
+        out.append(f'<rect x="{left}" y="{y}" width="{track}" height="{barh}" rx="4" fill="{p["bg"]}"/>')
+        out.append(f'<rect x="{left}" y="{y}" width="{bw:.0f}" height="{barh}" rx="4" fill="{p["accent"]}"/>')
+        out.append(
+            f'<text x="{left + bw + 12:.0f}" y="{y + 16}" font-family="{SANS}" '
+            f'font-size="13.5" fill="{p["muted"]}">{v:,}</text>'
+        )
+    out.append(
+        f'<text x="28" y="{h - 18}" font-family="{SANS}" font-size="12" fill="{p["subtle"]}">'
+        f'2,042 commits since April 2026. Counted in each repository, public and private.</text>'
+    )
+    out.append('</svg>')
+    return '\n  '.join(out) + '\n'
+
+
 written = []
 for name, p in THEMES.items():
     hero = HERO.format(serif=SERIF, sans=SANS, **p)
-    for base, body in (('hero', hero), ('metrics', metrics(p)), ('system', diagram_svg(p))):
+    for base, body in (('hero', hero), ('metrics', metrics(p)), ('system', diagram_svg(p)), ('commits', commits_svg(p))):
         path = os.path.join(OUT, f'{base}-{name}.svg')
         with open(path, 'w', encoding='utf-8') as f:
             f.write(body)

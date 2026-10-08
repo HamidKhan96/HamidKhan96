@@ -90,14 +90,14 @@ One tool per job. No list of four queues I have touched once.
 
 ---
 
-## Activity
+## Where the work is
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api?username=HamidKhan96&show_icons=true&include_all_commits=true&count_private=true&hide_rank=true&bg_color=17130E&title_color=ED6230&text_color=F2EDE3&icon_color=ED6230&border_color=2A2318&border_radius=14">
-  <img alt="GitHub statistics for HamidKhan96" src="https://github-readme-stats.vercel.app/api?username=HamidKhan96&show_icons=true&include_all_commits=true&count_private=true&hide_rank=true&bg_color=FFFFFF&title_color=DE4F1D&text_color=16120C&icon_color=DE4F1D&border_color=DED5C4&border_radius=14" width="60%">
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/commits-dark.svg">
+  <img alt="Commits by repository: Applying 1,680. Quill 267. Workspace 65. Exynex site 28. ICP pipelines 2." src="./assets/commits-light.svg" width="100%">
 </picture>
 
-Twelve of my fourteen repositories are private, so this card counts a fraction of the work. The figures in the panel at the top are counted across every repository, public and private.
+Twelve of my fourteen repositories are private, because they hold live prospect and candidate data. Every figure above was counted in the repository itself rather than read off a card, which only sees the public two.
 
 ---
 
